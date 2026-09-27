@@ -82,8 +82,9 @@
   .home-hero{text-align:center;padding:34px 0 10px;}
   .home-hero h1{font-size:38px;font-weight:800;margin:14px 0 6px;line-height:1.15;}
   .home-hero p{color:var(--ink-soft);font-size:16px;max-width:560px;margin:0 auto;}
-  .round-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px;}
-  @media (max-width:700px){.round-grid{grid-template-columns:1fr;}}
+  .round-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:34px;}
+  @media (max-width:920px){.round-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:640px){.round-grid{grid-template-columns:1fr;}}
   .round-card{
     background:var(--surface);border:3px solid var(--ink);border-radius:22px;
     padding:26px;text-align:left;cursor:pointer;position:relative;overflow:hidden;
@@ -96,6 +97,16 @@
   }
   .round-card.r1 .tag{background:var(--purple);}
   .round-card.r2 .tag{background:var(--pink);}
+  .round-card.tb .tag{background:var(--yellow);color:var(--ink);}
+  .round-card.tb{border-color:var(--ink);}
+  .round-card.tb:hover{box-shadow:9px 9px 0 var(--yellow);}
+  .buzzer-badge{
+    font-family:'Poppins',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.03em;
+    color:var(--ink);background:var(--yellow);padding:8px 16px;border-radius:100px;border:2px solid var(--ink);
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .tb-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:24px;}
+  .tb-actions .btn{min-width:190px;}
   .round-card h2{font-size:23px;margin:0 0 8px;font-weight:700;}
   .round-card p{color:var(--ink-soft);font-size:14.5px;line-height:1.5;margin:0 0 18px;}
   .round-card .go{font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;color:var(--ink);}
@@ -234,6 +245,12 @@
         <p>A shuffled deck of quickfire questions (with a few bonus puzzles mixed in). Host reads it aloud, participant answers on the spot.</p>
         <div class="go">Start Round 2 →</div>
       </div>
+      <div class="round-card tb" onclick="goTo('tiebreak')">
+        <span class="tag">TIE-BREAKER</span>
+        <h2>Buzzer Round</h2>
+        <p>15 puzzle buffer questions for tie scenarios. No timer, no options on screen — first correct buzzer wins the point.</p>
+        <div class="go">Start Tie-Breaker →</div>
+      </div>
     </div>
 
     <p class="footnote">Built for live moderator use — timers, sound cues and visual feedback only. Scoring stays with the jury sheet.</p>
@@ -329,6 +346,59 @@
         <h2>🏁 Round 2 Complete</h2>
         <p>Every card in the deck has been used. Great rapid-fire round!</p>
         <button class="btn btn-primary" onclick="startRound2()">Reshuffle &amp; Replay</button>
+        <button class="btn btn-ghost" onclick="goTo('home')" style="margin-left:10px;">Back to Home</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIE-BREAKER (BUZZER ROUND) ============ -->
+<section id="tiebreak" class="screen">
+  <div class="wrap">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <img class="logo-bar" src="data:image/gif;base64,R0lGODlhNwLMAPEAAAAAAO4xNDZbqQAAACH5BAEAAAAALAAAAAA3AswAAAL+hI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+TwkIh8RiAIhMKpfMpvNljEqFz6r1is1qZ9PudAsOi8fkMsCLPprX7Lb73Up/4fS6/Y5XyI35vv8PeLVHFFhoeIgoM0iV2Oj4+CcgKQCyCHmJmVk1ydnp+Ul5YalJWmoKA5qqmmoxePoKG6uxSlvLOrEnq7vLa2D7C/wpkdtbbPwYnKw8OSx3/AydtzxNHUEcjZ09Rs3NDeGsHS7+1F3u/QA+rr6eY+7ejZ7GPk+P+n5f7ZBez98Pgs9pAsCADfb5O4hQ4DsR9/TJSwgxYgJzKyg69CIxY0L+eDE4MnioURbGkAvy3TC5AKSbazBGoVjEyAXMIS1dmpipYpoPnR/RvHGlyGYJnCtmdmEBMwXRE8qULLs4h43QOElPLLVq1KfSqje5kmjqJBnUqGS8yjQ74iqJrEC7og2hNoTYK8HGSjETt2jeSm8/sN3rIavbtgyBBVb51XDPkWKMxhA8tC+Hv5DTOo481YNiDJdRbNajNUzns4A7lM5A+a/l0XAlz7LFWXVF2IuPimatF7df17FTsxUhGzjvC79a6WZRvPZdML+hNBeeGbXv1K2f842egTau4S60g7atJThS8buxG59OvXzl64Q51Apivob3BKEFkVdBeXV76ej+fatff1h8FLzXDEtAEJgSY1akN959k3H3TX/oBeigBqcptEqBiDlFS0EKPsFgbhXyt58oEk74YH7sGYhBh9YYFJaLCYLnhH9UhZhiiRWcKGGOI5ooIAQy2kUWFkPS9+ES092oIoUs7shjjxYu6SSMFRypXJFaZOihlkmgKGKTPloJ348H4HiejWNuOCCXREZhhpszLsdEfw2qucGFb+rYJYBQUrlmfRbImSWcbBCKpJc/2BkmmkDy+eJxkerZJ54kPikBookmWYamBgi6KKP4iTplkIViup2kEZLaG6QOeHomqIfeciohX0q5FauPoroqhPFQOieYrfLaAKyfytr+hip7xhQqri+dmKev35k6qavLWrcrmQ8oWymdd3AbrKHNOjuYsNmyWS2xf0qLQJSlWqsAuOGKKw0o1wIRpRrPQnuptr9SqyG88wKaprrx2tstvX3QOjBNPuQ7Ko/9oturwKkC3K67w/pbEsK1OlwIw9MqnEO++pZL7sUGN0zjfxwnbK7KLyMg8qbeXhyBJEzUnLGiNZh8MmYSn4vsvxaXeXTPGq+7si8ej0xywNsyswTPsfrMhSXsEh1zuhRfi/XEX8Osa8UzOy3Mx8wiDfLBVFedttpB/5zU1gUPzfbZNjedt95KLy3z2DTHDTUfG899gCdNPF24rTgQZXff/Ab+XjTYUZsG7N+Ae1354IrL/W7bE3WyOOEsIx5UW5FTnrLRfl+dtOScmr2564KjTfrpqFPOwOc7m753EY9ztXrAELPesvG3H9653F07b/jUvjcu+mKn9p576dmrfYNZxdNeO9nJcz475hgfC/Talkf/6vTBO/7vwNhvz6H771dfk1Df2x4+9MLfvTyujQ98/aPeAEdHP9jdLEuNmx9BtPdA7tEgLvsT3+T4V771/U8/fFNg+sh3wMTZD31h8+Dc2IfACMItgfdTn3NKVEH/EcyCCwRhCcWWQRrCyUxnGA7wSHi5eUHNgSpcYRFbuLuIwfB8yPsCDzNnwubhMIQ6NBz+tnQXRBEesYc3NOEQOzbC+r1Ngo/pSwwNOIcrorGGBKRi6F4HRHCY6TQ/lGIUR0bEMUJQZxhM4r74dEYk0kmNmgtgIe0owC4KUlw/oiMLuchGIuHRbWEUIx8tWEbzBDKKjGmk3aAoOzdikX2EjOPX6ijKwk0yhY+0ZCiWlT9XbdKU9RkRKCHZwVAq8pAfKmVpRojIva3Sc5W0ZBv9uBbezBKXBvHlJ5dJyxzKUHQV+iULpdmtYWqxmEngJjahY61ZqqWaz2Si8oLJyeQ5yJp6jKYL2aZN3LXSlW0kDbzEiZZ1ljN2TYykBuGXTlkBBphUxB8Qv0jMeRqzj8iszj3+N5mX+9zyluf85iJRGNAkDfSI0gSoAlWZ0C3+rp0su1PTIGpGP00Umsw0ZEYvR56NkrSjHj1oIVkp0pG+EpaNCiBFp/nOmO4zl/3MYhU3uEYFyfSSAZWaNr1ltT0es6fBDCRgxLNSc9rQn0et6UvJstTTGS+e9IqqTncqPiV20KqusU5W+VnRVF4UqUkFz16uuUsU6pV9ZtUpCNX6up/Wla6DZeRQ4VhUjG7VqLK5axEtykxhSnabOfXrVLHCxDOeprGHdakuuQpUZDbHsUxN591sFiycltYKlTUtZvkpWF66UTVvJWpcd/lVwo7yLqRFa0u9ajTUzgkAR1pt/eL++keixja3wJUt3j5r1Dd69rfYTJ9uidtOyP5NuMUiFEm7adySomy67gTtbc1r3eZ21aDmgy2E0vvOx+KWu+iTnrxa2wP8apdpiC2veY/5X/g2tLDsDdR+qStX+M4PjaFLiX0Zhl8eRFiuAEQngQfM0P8iuHUAju4U57thDYd4hlo0oI+uhCDsfhcJK26h0GzL3AKf18MxLuU/ZSxdC49YseslZHZBTF8Vr1Yx3NxJeE3MQQHD1bkiTm8iRczf6ULRugt2cbRA1hB5buLISEyykvvLZBrXWFU9xnCUpby1D4KxyzmSZzkou2XfknFFX4axf8U85s6SN8NQvjOPb3z+nNVSGENZVqiR5fwxcNZ5yX6+Lp95uFtH51jHtb3g4JD8j4G4mRxctjKdFw3mHUu6zJldbqRxHFrmkdhpmNbMQF5p6PwiWrwuA3WoKWoyVQ96xn9+9KgBraPSHrh9r950jJDnUFsv+afHq7COgW3mMPfa14719Adefckii4Ips251e5UNY8EWkNrqdfawxf3cPham2MbOWbdtOsFdk1rZH+6ztHFNZujiea7lJvdJgUxsTQu5xcS0iw2GfWpwozrh0b4wmPPN633fu9/+9inAA47tWFdy2ib9dcQV7nGGG9jGFX/nmfe8XEvzVC4Z/yElw2tvLy+8wyCXuKgpDm3+hJO85CZfLMd9LjCEY7zlnW73+w5+8YnXfOZK73liGQ1ph+Nc5N8W071GQHT8ujzmig45z0H+ZJszXN559rqjnj71nAeY7ELKetEHDvOoMX3kVV86HE3d6D3nvXyr1rfXaX42oQ894+4WqdzTPumGS/21ucT7zZ/d9C+PPOn8/qbgB8/uB8/68HNP/OQpX/KTs33sYo+8kj9f+tDS+PLdzXrht0iy1IfyylpFe9odv3fQ2/3vZU62nxJtAre/fsUYlT2yEz962zMd97k3fvOpXHfIz5viyW+76zUf9+o5H7nI57roKcz8x3u/8tCPPuulTn3QY1/grQ8jYbf/13r+j9/vUw+/+H+u/FzXWvpqH/D5249t1ud+HgV/9SR/BRh6H9d5Coh/+ZduqNeA32dH/weA7FeBHEWAvEd7EUh+Tud7emN/94d4gNds+0eBHbhwJwhGmYd5xvV+Guh5ulZ9Erh2tfd1ySR5MqeCpud/M9h2IcUTw4dX2jeCMRh2CEiC6WeDPPdi5dd1epeESjh/g/JmbcI4kRVk9PGECyiCLxR0LPV8jFeCOuiDpHZbyGERVgg8xVdgXJhWR8iBVTIzIZhnufKAZKh+wHZ8KZCGKMY4CnNd6vVutEZ/RQiBP0eHY0ZVUWd+ZQho2GNt3HYOxMEwsVdTo/Z2sgWHMCj+h4KTiDVmT78nhlDIgJCoiTkxiS1iOpZIhM1FcN7GgIpngqIEhvyWOox2iG5Ig14lbHkohJ+hiu4DiC8oY68YiSSBjL9zjMH3FO5BOKxITZiYieWVjNVYOmyGinOxAU8DjUHDccbYVNYojizmW46YKcCYHcLwSsQYjagGju40jvH4A3pkjumobW6jWqRziQAVcu+IYPIIkDtAj77ojP5YcJR1hZsST1XGfQHpkPLRiwQ5A9kzH4mykCs4ew+pkTLwY1N4Eg9UkRVDaBm5kSXZAh2JhBwJkiE5FiN5hiYJk9mIVvWokm8DjNPTgBH2jzHJk5I4kzRpDza5ECREaIP+6Fo9iZTrVo4S2REEARCxooZGCY9JSZXXhpIp2R25Y4FR+ZJV6ZWvMZBMmZVC+ZRUOI07+JWQwIkyuZQeWZNUE4B+eJZimZaPsJYyyWCspZVxWZR7OCbpkmSx5IGmEIccNI8qhJZsCWt8eY7gyHoFdZfZ5IWDuVt3UJhjVSmHeZWXCZFOSXhFKZWXVzmcaXCTKYt2tiCRWZrKoZmCBpSeoY6MKYQNKX+rSWeCeZqhlpqGaDYteWibqZpB6XZSCWe0CYeS6Xu4KYO8uZu66Dq++Ztt6ZYnOZzTCHdduZzsRZrIySSUOViWGZwMtCUYSJfMOJxymYnJZ1iBGJ6T1Z3+ucl/zemdpzWe8lWe5nl9jalf6klXPLad4hmK8OmcjdGeCGUkQzids5Gf+pme/MmP7IlzGPafUImZ9MkZJbNtHgQfMpMWfhGV0pmgfCh8H2qc2XKR0wZaVvR3KcqJcRg2igWjG4R/O/RrPrMhNRpd0YN/BHWfWDeiDPp2ormPBtVrGcQH6GWkLcp7STqk+KOiHEcss3Oj6sWkDmNeqNSjLEd06BmalBejTWpyFCNLo6mk9Vc0X+qkwhNCkMImU9qGZ6qmJYSlWepqCyqAjumluoWmYQqnvKItlxmBZLKniCMZgAQjbsqnfaouc4qVPrqlH2qUQgqmhAqhyIIdqAL+qGYnqHrKqYb6p4cKKo6GKT7Eo3RakC0HqZGqe52apl5Fo5Uap6L6pK5apjP3qrQ6qQ3zW9OUMC2VVBfpqzDFWx7GqI2qpbJ5p0E6g4MaLs3qRSBlSgCKhQaaNypzU9QaR0KkOdIqrA+qnZIGqyfjn3vVb1uXmJn2mUCqrB7JrNg6rdkKrfD6VOG6MRUqr9vqrsPIqmszrt5KpOCKq+3Yqv6KYwm5YeD1Zi6XR+vKrvtKqbmKr8HjnhoasRPLoYBZsRRrse+qsRnbrwIbVAD7rwT7sAM7mOb6mkqZimYZa2XYrhtLriZ7Qg57orVKmTHrQi+bsffKsxzbsT7bs9v+lVowS7PJmn2m2gHuQIna9n86+7Pw9rQ+67RAm6lSqD5FS7QQu7Mfy6/0mpnYOrVAu4Kwd66OurK/qKrTGbZ7mq/smLNuW7LzubPSCrVRu7Zw664cy7VJhLV227eYR0NnFYRoO4gU+LF0K7V/S7V4m7e9WS1Dm7Uy66xb67VRK7Z127N3i3MGG2KCCxaEG38uU6+RG7czq7V+W4QzerpBq7mt6Loh+7qoU6Sru7i0e4FHFp/UObhGW3QnWLWxC7mUS7thi7EiCbaKW7vAu7G4lLezK7mkW7qpCjaemxygy1BdN7pzq7hTS7w0B71ta7tsmIEBa7oj+6bPq73Ie7v+3Za7CqqNvJu2Ifq7V7uvk2u5z9m4j/a9+8u/T1uYewudwou+c9uCluNKKbZ+vUuT81u+bzvAQeu4y+u96Tu+D8y6jEvA+Ju/24u8HCgvv4qwCJzA8ZuSDAy+Dqy8vJO/69O/Fxy+GHy/12O/Cym+Fny568u+7SuisTbCl4W9U2mxbHu8EeolDHwz3NvBHFzB3jlAzovC9PvCI9hXuum+SdtXB4uDIDM+NfzEM3zDGeXFvNbCyfvE0RvEISelIlvGJ7zGLOtNpEi9CvyaOlrEMPxRQ4xjbWqzDYXEUWzBXCxalqrGZkzBNky4hQvH5HjF50rHNQTIweu/g7zFe1z+vALcxmP8yCwcxnd8xn4st0D4ilR8IB8sVihzlJYct178Z8vRvRpsm5HsyYQMy+drKwD8tZ1sw5xpLF/VKaS8RmIYxpmchYlLvszSyq+MuMScy0qcwtBqy6yJx5ecwYdMwikrnJzrX8kly7PcxdEsu/2pvhGMzMoszajbzBD8rs8MyZmbxMy5y7m1BViSl8DMxg2cyt4MzYX8yeisz/YczMwMxebbtcUcwNy8zfysrjyMizQgz9hIz5hcv/gs0RLsytxp0P88vHbMyZbrxAfduvucjwq90NessGBsh+XMzmCqygB90PZq0Sm9zBm9xB5duetMzi09oSLcYwdcZDr+LM7mHNDdjMsofcwvjdHn7MJ/rNE3ncwbfdH1XKe+/IjROcVlO8ZMTcNLLczTPM5QfdV9jNRYvcEyHdMDipAlrXo6wJIm3ShHHdT3PNRw3c/ZO85bDdQ0PdMrTdC3jMpuLYsLi9aqB9JWqdNMFqB+zcZ6HdZF3dQQHcuK/daQ/c3NxdKIja7vPH1mDZpVbc3JDNZC3ddfTck/DdMoTcb+7NgCzbdkbdoTGtL3OH2KydlIO9cTLbRx7dUU3dVZnde5Hdq1TcAdLdmWfayY/XE7XNhsfdi+ndR4vdjhXNF8/dSi3dvAzdGDPNzMTdjJHSPVCzqZVNaRndqgfdd0XdD+mHvaxD3dv03Rla3d283dIbzW2XyLrR3R1t3cqK3bRg3Z6l3euG3b0+zeVw3f8U3V7+zT5p3f6/zZzm3alYzM7Rze+v3fwY3dAb7gPjnfav2+3x1vEz7DDZ7d+93YE/vROK3RIr7J6M281K3ZI3zFDP25gYt01Y3fg+qNA87V/E2tDY7iKj3ek03LQj7QII7c6GgDzWjA3QPOEl7kZZzjq8t5XKi6JKutz+riT166Ua7a582zJ+6+Hd6USq5DJdPkj43l1xqtBurIo007/SyuU27f8NOtbVPnPVfT6hzDZjvjaIgSzrMDmbG3R3DnhFDoalDHqaupsQpcb3HiVMD+RrcariZ7PYW+4vi5u3ye6SAc6EtUzIpyqZ5O5YuuqFby6E2sI+rU6Jtqu0fuEds4lHz2MKIOu4KMqbQuoPP5qbi+yZ4qpgskq6Xe0mHOgnC3laOEL0fR6iPWVdR26buNReoG5pHW7LUCrMzu2QUajNVZ7IB+K4ay7FjMQCwq6cNO2tcLPhkuwcNK2eVONtcu7v495twe65qsBOtp7tGEv1Vey9AN7dZeodMunij6PwTvtgQU3V+su/R+ttCjlrHw13+dCRK/RwyP5MhelxkPCRbv3b6m8R9/CRwf440G8iWPCSJvnahp8isPB9xubtrO8jE/K8cOdBQv8zdfL2RGvok4z/PJuIQ9D/TP8PNBT/S8UItFj/R2efRJz/SFIIpND/UiYXVRT/WEaSlVj/WnwIhZz/WOoPJdD/ZhL/ZjT/ZlzwQFAAA7" alt="ANON Global Foundation logo">
+        <button class="nav-home" onclick="goTo('home')">← Home</button>
+      </div>
+      <span class="qcounter" id="tb-counter" style="color:var(--ink);background:#FFF3D6;border-color:var(--yellow);">Question 1 / 15</span>
+      <button class="btn btn-ghost btn-sm" onclick="restartTiebreak()">Restart</button>
+    </div>
+
+    <div style="text-align:center;margin-bottom:6px;">
+      <span class="buzzer-badge">🔔 BUZZER ROUND — no timer, no on-screen options</span>
+    </div>
+
+    <div id="tb-game">
+      <div class="qcard" id="tb-qcard" style="text-align:center;">
+        <div class="points-bubble" id="tb-bubble">+10</div>
+        <div class="q-tag">TIE-BREAKER · PURE PUZZLE</div>
+        <div class="q-text" id="tb-qtext" style="margin-top:18px;">Loading question…</div>
+        <div class="status-pill" id="tb-status"></div>
+      </div>
+
+      <div class="tb-actions">
+        <button class="btn btn-green" id="tb-correct" onclick="judgeTiebreak(true)">✅ Correct — Award Point</button>
+        <button class="btn btn-pink" id="tb-wrong" onclick="judgeTiebreak(false)">❌ Wrong Answer</button>
+      </div>
+      <div class="tb-actions" style="margin-top:10px;">
+        <button class="btn btn-ghost btn-sm" id="tb-skip" onclick="skipTiebreak()">⏭ No One Buzzed — Skip</button>
+        <button class="btn btn-primary" id="tb-next" disabled onclick="nextTiebreak()">Next Question →</button>
+      </div>
+
+      <div class="mod-panel">
+        <div class="mod-head">
+          <h3>Moderator panel — hidden from participants' screen</h3>
+          <button class="btn btn-ghost btn-sm" id="tb-reveal-btn" onclick="toggleTbAnswer()">👁 Reveal Expected Answer</button>
+        </div>
+        <div class="mod-answer" id="tb-answer"></div>
+      </div>
+    </div>
+
+    <div id="tb-complete" style="display:none;">
+      <div class="complete-card">
+        <h2>🔔 Tie-Breaker Complete</h2>
+        <p>All 15 buzzer questions have been played. Hopefully that settled the tie!</p>
+        <button class="btn btn-primary" onclick="restartTiebreak()">Replay Tie-Breaker</button>
         <button class="btn btn-ghost" onclick="goTo('home')" style="margin-left:10px;">Back to Home</button>
       </div>
     </div>
@@ -735,8 +805,110 @@ function toggleAnswer(){
   box.classList.toggle('show');
 }
 
+/* ================= TIE-BREAKER (BUZZER ROUND) DATA ================= */
+const TB_DATA = [
+{q:"What word in the English language is always spelled incorrectly?", a:"Incorrectly"},
+{q:"What can you break, even without touching it or picking it up?", a:"A promise"},
+{q:"What is full of holes but still holds water?", a:"A sponge"},
+{q:"What begins with 'e', ends with 'e', but only ever contains one letter?", a:"An envelope"},
+{q:"David's father has three sons: Snap, Crackle, and ___?", a:"David"},
+{q:"What can you hold in your left hand but never in your right hand?", a:"Your right elbow"},
+{q:"Forward I am heavy, but backward I am not. What word am I?", a:"Ton (backward reads 'not')"},
+{q:"What has many keys but can't open a single lock?", a:"A piano"},
+{q:"I am an odd number. Take away one letter and I become even. What number am I?", a:"Seven (remove the 's' → 'even')"},
+{q:"What goes through cities and fields but never actually moves?", a:"A road"},
+{q:"What kind of room has no doors or windows at all?", a:"A mushroom"},
+{q:"A man pushes his car to a hotel and instantly loses all his money. What happened?", a:"He's playing Monopoly"},
+{q:"What has a bottom at the very top?", a:"Your legs"},
+{q:"What comes once in a minute, twice in a moment, but never in a thousand years?", a:"The letter M"},
+{q:"What can you keep even after giving it to someone else?", a:"Your word"}
+];
+
+let tbOrder=[], tbIndex=0, tbJudged=false;
+
+function restartTiebreak(){
+  tbOrder = shuffle(TB_DATA);
+  tbIndex = 0;
+  document.getElementById('tb-game').style.display='block';
+  document.getElementById('tb-complete').style.display='none';
+  loadTbQuestion();
+}
+
+function loadTbQuestion(){
+  tbJudged=false;
+  const item = tbOrder[tbIndex];
+  document.getElementById('tb-counter').textContent = `Question ${tbIndex+1} / ${tbOrder.length}`;
+  document.getElementById('tb-qtext').textContent = item.q;
+  document.getElementById('tb-answer').textContent = 'Expected answer: ' + item.a;
+  document.getElementById('tb-answer').classList.remove('show');
+
+  const status = document.getElementById('tb-status');
+  status.className='status-pill'; status.textContent='';
+  const card = document.getElementById('tb-qcard');
+  card.classList.remove('flash-correct','flash-wrong');
+  document.getElementById('tb-bubble').classList.remove('pop');
+
+  document.getElementById('tb-correct').disabled=false;
+  document.getElementById('tb-wrong').disabled=false;
+  document.getElementById('tb-skip').disabled=false;
+  document.getElementById('tb-next').disabled=true;
+}
+
+function toggleTbAnswer(){
+  document.getElementById('tb-answer').classList.toggle('show');
+}
+
+function judgeTiebreak(isCorrect){
+  if(tbJudged) return;
+  tbJudged=true;
+  document.getElementById('tb-correct').disabled=true;
+  document.getElementById('tb-wrong').disabled=true;
+  document.getElementById('tb-skip').disabled=true;
+
+  const card = document.getElementById('tb-qcard');
+  const status = document.getElementById('tb-status');
+
+  if(isCorrect){
+    card.classList.add('flash-correct');
+    status.className='status-pill ok show';
+    status.textContent='Correct! +10 points';
+    document.getElementById('tb-bubble').classList.add('pop');
+    confettiBurst(card);
+    playCorrect();
+  } else {
+    card.classList.add('flash-wrong');
+    status.className='status-pill bad show';
+    status.textContent='Wrong answer — buzzer passes on';
+    playWrong();
+  }
+  document.getElementById('tb-next').disabled=false;
+}
+
+function skipTiebreak(){
+  if(tbJudged) return;
+  tbJudged=true;
+  document.getElementById('tb-correct').disabled=true;
+  document.getElementById('tb-wrong').disabled=true;
+  document.getElementById('tb-skip').disabled=true;
+  const status = document.getElementById('tb-status');
+  status.className='status-pill time show';
+  status.textContent='No buzz — moving on';
+  document.getElementById('tb-next').disabled=false;
+}
+
+function nextTiebreak(){
+  tbIndex++;
+  if(tbIndex >= tbOrder.length){
+    document.getElementById('tb-game').style.display='none';
+    document.getElementById('tb-complete').style.display='block';
+  } else {
+    loadTbQuestion();
+  }
+}
+
 /* ================= INIT ================= */
 restartRound1();
+restartTiebreak();
 </script>
 </body>
 </html>
