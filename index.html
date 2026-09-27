@@ -242,7 +242,7 @@
       <div class="round-card r2" onclick="goTo('round2')">
         <span class="tag">ROUND 2</span>
         <h2>Rapid Fire — GK &amp; Mental Health</h2>
-        <p>A shuffled deck of quickfire questions (with a few bonus puzzles mixed in). Host reads it aloud, participant answers on the spot.</p>
+        <p>A fixed-order deck of quickfire questions (with a few bonus puzzles mixed in), same sequence on every screen — so moderator and scorer always stay in sync. Host reads it aloud, participant answers on the spot.</p>
         <div class="go">Start Round 2 →</div>
       </div>
       <div class="round-card tb" onclick="goTo('tiebreak')">
@@ -313,9 +313,9 @@
 
     <div id="r2-setup" class="complete-card">
       <h2>GK &amp; Mental Health — with bonus puzzles</h2>
-      <p>82 shuffled rapid-fire questions. Host reads the question aloud — nothing is shown to participants but the question itself.</p>
+      <p>82 rapid-fire questions in a fixed order — identical every time, on every screen, so moderator and scorer never fall out of sync. Host reads the question aloud — nothing is shown to participants but the question itself.</p>
       <div class="setup-row">
-        <button class="btn btn-primary" onclick="startRound2()">Shuffle &amp; Start Round 2</button>
+        <button class="btn btn-primary" onclick="startRound2()">Start Round 2</button>
       </div>
     </div>
 
@@ -345,7 +345,7 @@
       <div class="complete-card">
         <h2>🏁 Round 2 Complete</h2>
         <p>Every card in the deck has been used. Great rapid-fire round!</p>
-        <button class="btn btn-primary" onclick="startRound2()">Reshuffle &amp; Replay</button>
+        <button class="btn btn-primary" onclick="startRound2()">Replay Round 2</button>
         <button class="btn btn-ghost" onclick="goTo('home')" style="margin-left:10px;">Back to Home</button>
       </div>
     </div>
@@ -754,7 +754,7 @@ const R2_DATA = [
 let r2Queue=[];
 
 function startRound2(){
-  r2Queue = shuffle(R2_DATA.map((_,i)=>i));
+  r2Queue = R2_DATA.map((_,i)=>i); // fixed order — kept identical across every screen (moderator + scorer) so both stay in sync
   document.getElementById('r2-setup').style.display='none';
   document.getElementById('r2-complete').style.display='none';
   document.getElementById('r2-game').style.display='block';
